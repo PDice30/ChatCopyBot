@@ -44,8 +44,8 @@ class Bot(commands.Bot):
         print(message.content[:len(startPhrase)])
 
       # A message sent in the child channel starting with the delimitingChar will be sent to the parent channel sans that char
-      if message.channel.name == childChannel and message.content[:1] == delimitingPhrase and capturedMessage != '':
-        capturedMessage.content = message.content[1:]
+      if message.channel.name == childChannel and message.content[:len(delimitingPhrase)] == delimitingPhrase and capturedMessage != '':
+        capturedMessage.content = message.content[len(delimitingPhrase):]
         print(message.content[len(delimitingPhrase):])
         await capturedMessage.channel.send(capturedMessage.content)
 
