@@ -33,6 +33,9 @@ class Bot(commands.Bot):
     if message.echo:
         return
 
+    if message.author.name.lower() == parentChannel and (me in message.content.lower()):
+      print(f'{message.content}')
+
     # Only ever read messages from the bot's owner
     if message.author.name == me:
 
