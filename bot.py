@@ -6,7 +6,7 @@ import json
 me='pdice30'
 parentChannel = 'fftbattleground'
 childChannel = 'dice_the_vice'
-startPhrase = 'HeyGuys'
+startPhrase = 'catJAM'
 delimitingPhrase = '~'
 
 # Will store the Channel connection web socket
@@ -23,7 +23,7 @@ class Bot(commands.Bot):
   async def event_ready(self):
     # Notify us when everything is ready!
     print(f'Logged in as | {self.nick}')
-    print(f'Enter your startPhrase in the parentChannel chat to begin!')
+    print(f'Type {startPhrase} in the {parentChannel} chat to begin!')
 
   async def event_message(self, message):
     global capturedMessage
@@ -40,13 +40,13 @@ class Bot(commands.Bot):
     # Note: there's probably a better way to do this, but it is what it is
       if capturedMessage == '' and message.channel.name == parentChannel and message.content[:len(startPhrase)] == startPhrase:
         capturedMessage = message
-        print('Captured {parentChannel} message, listening for messages beginning with {delimitingPhrase} in {childChannel} chat...')
-        print (message.content[:len(startPhrase)])
+        print(f'Captured {parentChannel} message, listening for messages beginning with {delimitingPhrase} in {childChannel} chat...')
+        print(message.content[:len(startPhrase)])
 
       # A message sent in the child channel starting with the delimitingChar will be sent to the parent channel sans that char
       if message.channel.name == childChannel and message.content[:1] == delimitingPhrase and capturedMessage != '':
         capturedMessage.content = message.content[1:]
-        print (message.content[len(delimitingPhrase):])
+        print(message.content[len(delimitingPhrase):])
         await capturedMessage.channel.send(capturedMessage.content)
 
     await self.handle_commands(message)
